@@ -1,1 +1,960 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spark Bio - Nonprofit Biotechnology Education & Research (501c3)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .hero-glow {
+            background: radial-gradient(circle at 50% 30%, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0) 70%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen selection:bg-brand-500 selection:text-white">
 
+    <!-- Top Announcement Bar for Google Ad Grants compliance -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 text-center border-b border-slate-800">
+        <span class="font-semibold text-brand-400">Spark Bio</span> &bull; 501(c)(3) Public Charity &bull; EIN: <span class="font-mono text-white">85-1862988</span> &bull; San Diego, CA &bull; <span class="text-emerald-300">100% Non-Commercial Educational Public Benefit</span>
+    </div>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <a href="#home" onclick="showSection('main-content')" class="flex items-center space-x-3 group">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-brand-600/20 group-hover:scale-105 transition-transform">
+                        SB
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight text-slate-900 block leading-none group-hover:text-brand-700 transition-colors">Spark Bio</span>
+                        <span class="text-xs text-brand-700 font-semibold tracking-wider uppercase mt-1 block">Nonprofit Research</span>
+                    </div>
+                </a>
+                <nav class="hidden lg:flex space-x-6 items-center font-medium text-sm">
+                    <a href="#home" onclick="showSection('main-content')" class="text-slate-600 hover:text-brand-600 transition">Home</a>
+                    <a href="#about" onclick="showSection('main-content')" class="text-slate-600 hover:text-brand-600 transition">About Us</a>
+                    <a href="#mission" onclick="showSection('main-content')" class="text-slate-600 hover:text-brand-600 transition">Mission</a>
+                    <a href="#initiatives" onclick="showSection('main-content')" class="text-slate-600 hover:text-brand-600 transition">Initiatives</a>
+                    <a href="#ai-hub" onclick="showSection('main-content')" class="text-brand-700 font-semibold hover:text-brand-800 transition flex items-center gap-1.5 bg-brand-50 px-3 py-1.5 rounded-lg border border-brand-200">
+                        <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                        AI Bio-Hub
+                    </a>
+                    <a href="#governance" onclick="showSection('main-content')" class="text-slate-600 hover:text-brand-600 transition">Governance</a>
+                    <a href="#contact" onclick="showSection('main-content')" class="text-slate-600 hover:text-brand-600 transition">Contact</a>
+                    <div class="h-4 w-px bg-slate-200"></div>
+                    <button onclick="openPolicyModal('adgrant')" class="text-brand-700 font-semibold hover:underline transition text-xs bg-emerald-50 px-2 py-1 rounded">Ad Grant Policy</button>
+                    <a href="#ai-hub" onclick="showSection('main-content')" class="px-5 py-2.5 rounded-xl bg-brand-600 text-white font-semibold hover:bg-brand-700 transition shadow-sm shadow-brand-600/30">Ask AI Assistant</a>
+                </nav>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden px-6 pt-3 pb-6 space-y-3 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-lg">
+            <a href="#home" onclick="showSection('main-content'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-700 font-medium">Home</a>
+            <a href="#about" onclick="showSection('main-content'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-700 font-medium">About Us</a>
+            <a href="#mission" onclick="showSection('main-content'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-700 font-medium">Mission & Vision</a>
+            <a href="#initiatives" onclick="showSection('main-content'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-700 font-medium">Scientific Initiatives</a>
+            <a href="#ai-hub" onclick="showSection('main-content'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-brand-700 bg-brand-50 font-semibold">✨ AI Bio-Hub & Assistant</a>
+            <a href="#governance" onclick="showSection('main-content'); toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-700 font-medium">Governance</a>
+            <button onclick="openPolicyModal('adgrant'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-emerald-800 bg-emerald-50 font-semibold">Google Ad Grant Compliance</button>
+            <a href="#contact" onclick="showSection('main-content'); toggleMobileMenu()" class="block px-3 py-3 rounded-xl bg-brand-600 text-white text-center font-semibold shadow-md">Contact Us</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Main Content Area -->
+        <div id="main-content">
+            <!-- Hero Section -->
+            <section id="home" class="relative bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white py-28 lg:py-36 overflow-hidden">
+                <div class="absolute inset-0 hero-glow"></div>
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#34d399_1px,transparent_1px)] [background-size:24px_24px]"></div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-brand-950/80 border border-brand-500/30 text-brand-300 text-xs sm:text-sm font-semibold mb-6 shadow-inner">
+                                <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
+                                Registered 501(c)(3) Public Charity &bull; EIN: 85-1862988
+                            </div>
+                            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
+                                Democratizing <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-200">Biotechnology</span> & Education
+                            </h1>
+                            <p class="text-lg sm:text-xl text-slate-300 mb-10 leading-relaxed font-normal">
+                                Spark Bio eliminates academic barriers by offering open-source life science curricula, supporting independent researchers, and fostering global public engagement in biological innovation.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <a href="#ai-hub" class="px-8 py-4 rounded-2xl bg-brand-600 text-white font-bold hover:bg-brand-500 transition text-center shadow-xl shadow-brand-600/30 flex items-center justify-center gap-2 group">
+                                    ✨ Try AI Bio-Assistant
+                                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </a>
+                                <a href="#initiatives" class="px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-bold transition text-center border border-white/15 backdrop-blur-md">
+                                    Explore Initiatives
+                                </a>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-brand-500 to-emerald-400 opacity-30 blur-xl"></div>
+                            <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1000&q=80" alt="Biotechnology Research Laboratory" class="relative rounded-3xl shadow-2xl border border-slate-700 object-cover w-full h-[400px]">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trust Bar / Quick Facts -->
+            <section class="bg-brand-900 text-white py-6 border-y border-brand-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-brand-300">501(c)(3)</div>
+                            <div class="text-xs sm:text-sm text-brand-200 mt-1">Tax-Exempt Public Charity</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-brand-300 font-mono">85-1862988</div>
+                            <div class="text-xs sm:text-sm text-brand-200 mt-1">Official EIN Number</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-brand-300">San Diego</div>
+                            <div class="text-xs sm:text-sm text-brand-200 mt-1">California Headquarters</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-brand-300">100%</div>
+                            <div class="text-xs sm:text-sm text-brand-200 mt-1">Free Educational Access</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GEMINI AI BIO-HUB SECTION -->
+            <section id="ai-hub" class="py-24 bg-gradient-to-b from-slate-50 to-brand-50/40 border-b border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brand-100 text-brand-800 rounded-xl text-xs font-bold tracking-wide uppercase mb-4 border border-brand-200 shadow-xs">
+                            <span class="w-2 h-2 rounded-full bg-brand-600 animate-ping"></span>
+                            Powered by Gemini API LLM
+                        </span>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                            Spark Bio AI Assistant & Research Hub
+                        </h2>
+                        <p class="text-slate-600 text-lg">
+                            Ask questions about our open curricula, explore micro-grants eligibility, or generate customized lesson plans instantly using Google's Gemini AI.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Left Panel: Quick Prompt Starters -->
+                        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
+                                    <span class="text-2xl">💡</span> Quick Prompts
+                                </h3>
+                                <p class="text-slate-600 text-sm mb-6">Select a prompt below or type your own question in the AI assistant:</p>
+                                <div class="space-y-3">
+                                    <button onclick="sendPresetPrompt('How can California high schools access Spark Bio open biotechnology curricula?')" class="w-full text-left p-3.5 rounded-xl bg-slate-50 hover:bg-brand-50 hover:text-brand-900 border border-slate-200 transition text-sm font-medium text-slate-700 flex items-center justify-between group">
+                                        <span>High School Curriculum Access</span>
+                                        <span class="text-brand-600 group-hover:translate-x-1 transition-transform">&rarr;</span>
+                                    </button>
+                                    <button onclick="sendPresetPrompt('What are the eligibility requirements for Spark Bio Research Support Micro-Grants?')" class="w-full text-left p-3.5 rounded-xl bg-slate-50 hover:bg-brand-50 hover:text-brand-900 border border-slate-200 transition text-sm font-medium text-slate-700 flex items-center justify-between group">
+                                        <span>Micro-Grants Eligibility</span>
+                                        <span class="text-brand-600 group-hover:translate-x-1 transition-transform">&rarr;</span>
+                                    </button>
+                                    <button onclick="sendPresetPrompt('Summarize how Spark Bio supports open-source science and public education in San Diego.')" class="w-full text-left p-3.5 rounded-xl bg-slate-50 hover:bg-brand-50 hover:text-brand-900 border border-slate-200 transition text-sm font-medium text-slate-700 flex items-center justify-between group">
+                                        <span>San Diego Public Mission Summary</span>
+                                        <span class="text-brand-600 group-hover:translate-x-1 transition-transform">&rarr;</span>
+                                    </button>
+                                    <button onclick="sendPresetPrompt('Explain the importance of 501(c)(3) transparency in nonprofit biotechnology research.')" class="w-full text-left p-3.5 rounded-xl bg-slate-50 hover:bg-brand-50 hover:text-brand-900 border border-slate-200 transition text-sm font-medium text-slate-700 flex items-center justify-between group">
+                                        <span>501(c)(3) Governance & Transparency</span>
+                                        <span class="text-brand-600 group-hover:translate-x-1 transition-transform">&rarr;</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mt-8 pt-6 border-t border-slate-100">
+                                <div class="text-xs text-slate-500 font-mono">
+                                    Model: <span class="font-bold text-brand-700">gemini-3-flash-preview</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Interactive LLM Chatbox -->
+                        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-md flex flex-col h-[520px] overflow-hidden">
+                            <!-- Chat Header -->
+                            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-3 h-3 rounded-full bg-brand-400 animate-ping"></div>
+                                    <span class="font-bold text-sm tracking-wide">Spark Bio Gemini AI Assistant</span>
+                                </div>
+                                <span class="text-xs bg-slate-800 text-brand-300 px-3 py-1 rounded-full font-mono">Active 501(c)(3) Guide</span>
+                            </div>
+
+                            <!-- Chat Messages Area -->
+                            <div id="chat-messages" class="flex-grow p-6 overflow-y-auto space-y-4 bg-slate-50/50 text-sm">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">AI</div>
+                                    <div class="bg-white p-4 rounded-2xl rounded-tl-sm border border-slate-200 text-slate-700 shadow-xs max-w-[85%] leading-relaxed">
+                                        Hello! I am your Spark Bio AI assistant powered by Gemini. Ask me anything about our nonprofit programs, educational resources, research micro-grants, or how to get involved!
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Chat Input Form -->
+                            <form id="chat-form" onsubmit="handleChatSubmit(event)" class="p-4 bg-white border-t border-slate-200 flex gap-3">
+                                <input type="text" id="chat-input" placeholder="Ask about biotech curricula, grants, or our mission..." class="flex-grow px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-600 text-slate-900 text-sm font-medium bg-white">
+                                <button type="submit" id="chat-submit-btn" class="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold transition shadow-md shadow-brand-600/30 text-sm flex items-center gap-2 shrink-0">
+                                    <span>Send</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Us Section -->
+            <section id="about" class="py-24 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <div class="inline-flex px-3.5 py-1.5 bg-brand-50 text-brand-700 rounded-xl text-xs font-bold tracking-wide uppercase mb-4 border border-brand-200">
+                                WHO WE ARE
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">
+                                Advancing Science for the Public Good
+                            </h2>
+                            <p class="text-slate-600 text-lg leading-relaxed mb-6">
+                                Headquartered in San Diego, California, <strong class="text-slate-900 font-semibold">Spark Bio</strong> is an independent tax-exempt 501(c)(3) public charity organization (EIN: <span class="text-brand-700 font-mono font-bold">85-1862988</span>). We believe that biotechnology literacy and scientific research tools should be universally accessible to all communities without economic obstacles.
+                            </p>
+                            <p class="text-slate-600 text-lg leading-relaxed mb-8">
+                                Our dedicated team collaborates with educators, students, and independent investigators to remove paywalls, curate peer-reviewed open educational resources, and support impactful community life science initiatives.
+                            </p>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-xs">✓</div>
+                                    <span class="text-slate-700 font-medium">Fully transparent nonprofit operations and annual reporting</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-xs">✓</div>
+                                    <span class="text-slate-700 font-medium">Free open-source educational curricula for schools and colleges</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-xs">✓</div>
+                                    <span class="text-slate-700 font-medium">Strict non-discrimination and public benefit charter</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden border border-slate-800">
+                                <div class="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-brand-500/20 rounded-full blur-3xl"></div>
+                                <h3 class="text-2xl font-bold mb-6 relative z-10 flex items-center gap-3">
+                                    <span class="w-3 h-3 rounded-full bg-brand-400"></span>
+                                    Official Nonprofit Credentials
+                                </h3>
+                                <ul class="space-y-4 text-slate-300 relative z-10 text-sm sm:text-base">
+                                    <li class="pb-3 border-b border-slate-700/80 flex justify-between">
+                                        <span class="text-slate-400">Legal Name:</span>
+                                        <strong class="text-white">Spark Bio</strong>
+                                    </li>
+                                    <li class="pb-3 border-b border-slate-700/80 flex justify-between">
+                                        <span class="text-slate-400">IRS Classification:</span>
+                                        <strong class="text-white">501(c)(3) Public Charity</strong>
+                                    </li>
+                                    <li class="pb-3 border-b border-slate-700/80 flex justify-between">
+                                        <span class="text-slate-400">EIN Number:</span>
+                                        <strong class="text-brand-300 font-mono">85-1862988</strong>
+                                    </li>
+                                    <li class="pb-3 border-b border-slate-700/80">
+                                        <span class="text-slate-400 block mb-1">Principal Address:</span>
+                                        <strong class="text-white">4365 Executive Dr, Ste 1100, San Diego, CA 92121</strong>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span class="text-slate-400">Official Email:</span>
+                                        <strong class="text-brand-300 font-mono">query@sparkbio.bond</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="rounded-2xl overflow-hidden shadow-lg border border-slate-200">
+                                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=80" alt="Scientists collaborating in lab" class="w-full h-48 object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mission & Vision Section -->
+            <section id="mission" class="py-24 bg-slate-100/70 border-y border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <span class="inline-flex px-3.5 py-1.5 bg-brand-100 text-brand-800 rounded-xl text-xs font-bold tracking-wide uppercase mb-4 border border-brand-200">
+                            CORE PURPOSE
+                        </span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+                            Our Mission & Vision
+                        </h2>
+                        <p class="text-slate-600 text-lg">
+                            The guiding principles behind everything we do at Spark Bio.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white p-8 sm:p-12 rounded-3xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -z-0"></div>
+                            <div class="relative z-10">
+                                <div class="w-16 h-16 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-3xl mb-6 shadow-inner">
+                                    🎯
+                                </div>
+                                <h3 class="text-2xl font-bold text-slate-900 mb-4">Our Mission</h3>
+                                <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                                    To democratize access to biotechnology education and research resources, equipping students, educators, and independent investigators with the tools, knowledge, and collaborative networks necessary to solve critical global health and environmental challenges.
+                                </p>
+                                <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                    <li class="flex items-center gap-2"><span class="text-brand-600 font-bold">▪</span> Removing cost barriers to scientific education</li>
+                                    <li class="flex items-center gap-2"><span class="text-brand-600 font-bold">▪</span> Empowering underserved school districts with lab resources</li>
+                                    <li class="flex items-center gap-2"><span class="text-brand-600 font-bold">▪</span> Championing open science methodologies</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-white p-8 sm:p-12 rounded-3xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -z-0"></div>
+                            <div class="relative z-10">
+                                <div class="w-16 h-16 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-3xl mb-6 shadow-inner">
+                                    🔭
+                                </div>
+                                <h3 class="text-2xl font-bold text-slate-900 mb-4">Our Vision</h3>
+                                <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                                    A world where geographic, economic, or institutional boundaries do not limit anyone's ability to participate in or benefit from life-saving biotechnology innovations and scientific discoveries.
+                                </p>
+                                <ul class="space-y-2 text-sm text-slate-700 font-medium">
+                                    <li class="flex items-center gap-2"><span class="text-brand-600 font-bold">▪</span> Global scientific literacy by 2035</li>
+                                    <li class="flex items-center gap-2"><span class="text-brand-600 font-bold">▪</span> Inclusive networks for emerging researchers</li>
+                                    <li class="flex items-center gap-2"><span class="text-brand-600 font-bold">▪</span> Sustainable ecological biotech breakthroughs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scientific Initiatives & Programs -->
+            <section id="initiatives" class="py-24 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <span class="inline-flex px-3.5 py-1.5 bg-brand-50 text-brand-700 rounded-xl text-xs font-bold tracking-wide uppercase mb-4 border border-brand-200">
+                            WHAT WE DO
+                        </span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+                            Programs & Charitable Initiatives
+                        </h2>
+                        <p class="text-slate-600 text-lg">
+                            Our initiatives are designed to foster learning, open collaboration, and public scientific stewardship.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                        <div class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200 flex flex-col">
+                            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80" alt="BioEd Open Curricula" class="h-52 w-full object-cover">
+                            <div class="p-8 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold text-xl mb-4 shadow-md">📚</div>
+                                    <h3 class="text-xl font-bold text-slate-900 mb-3">BioEd Open Curricula</h3>
+                                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                        Developing peer-reviewed, open-source biotechnology modules, digital textbooks, and interactive lab lesson plans for high school and undergraduate educators at zero cost.
+                                    </p>
+                                </div>
+                                <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
+                                    <span class="text-xs font-semibold text-brand-700 uppercase tracking-wider">Free Public Access</span>
+                                    <button onclick="generateAISummary('BioEd Open Curricula')" class="text-xs bg-brand-100 hover:bg-brand-200 text-brand-800 font-bold px-3 py-1.5 rounded-lg transition">✨ AI Summary</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200 flex flex-col">
+                            <img src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80" alt="Research Support Grants" class="h-52 w-full object-cover">
+                            <div class="p-8 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold text-xl mb-4 shadow-md">🔬</div>
+                                    <h3 class="text-xl font-bold text-slate-900 mb-3">Research Support Grants</h3>
+                                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                        Providing micro-grants and laboratory resource stipends to early-stage investigators and student research groups pursuing community health and environmental biotechnology projects.
+                                    </p>
+                                </div>
+                                <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
+                                    <span class="text-xs font-semibold text-brand-700 uppercase tracking-wider">Direct Financial Assistance</span>
+                                    <button onclick="generateAISummary('Research Support Grants')" class="text-xs bg-brand-100 hover:bg-brand-200 text-brand-800 font-bold px-3 py-1.5 rounded-lg transition">✨ AI Summary</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200 flex flex-col">
+                            <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80" alt="Community Symposia" class="h-52 w-full object-cover">
+                            <div class="p-8 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold text-xl mb-4 shadow-md">🤝</div>
+                                    <h3 class="text-xl font-bold text-slate-900 mb-3">Community Symposia</h3>
+                                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                        Hosting public workshops, virtual seminars, and collaborative panels connecting biotechnology experts with aspiring scientists and local community members.
+                                    </p>
+                                </div>
+                                <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
+                                    <span class="text-xs font-semibold text-brand-700 uppercase tracking-wider">Public Engagement</span>
+                                    <button onclick="generateAISummary('Community Symposia')" class="text-xs bg-brand-100 hover:bg-brand-200 text-brand-800 font-bold px-3 py-1.5 rounded-lg transition">✨ AI Summary</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Community Impact & Statistics -->
+            <section id="impact" class="py-24 bg-slate-900 text-white relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]"></div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+                        <div>
+                            <span class="inline-flex px-3.5 py-1.5 bg-brand-950 text-brand-300 rounded-xl text-xs font-bold tracking-wide uppercase mb-4 border border-brand-500/30">
+                                MEASURABLE CHANGE
+                            </span>
+                            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6">
+                                Our Impact in Numbers & Stories
+                            </h2>
+                            <p class="text-slate-300 text-lg leading-relaxed mb-6">
+                                Since our founding, Spark Bio has continuously expanded its reach across California and nationwide. Through open-access digital learning hubs and research grants, we empower the next generation of scientific pioneers.
+                            </p>
+                            <p class="text-slate-300 text-lg leading-relaxed">
+                                Every program we operate is fully funded by philanthropic contributions, public grants, and community partnerships dedicated to advancing the public good.
+                            </p>
+                        </div>
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80" alt="Students and researchers working together" class="rounded-3xl shadow-2xl border border-slate-800 object-cover w-full h-[360px]">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center pt-8 border-t border-slate-800">
+                        <div class="bg-slate-800/60 p-8 rounded-3xl border border-slate-700/80">
+                            <div class="text-4xl sm:text-5xl font-black text-brand-400 mb-2">12,500+</div>
+                            <div class="text-slate-300 font-medium">Students Reached Annually</div>
+                        </div>
+                        <div class="bg-slate-800/60 p-8 rounded-3xl border border-slate-700/80">
+                            <div class="text-4xl sm:text-5xl font-black text-brand-400 mb-2">45+</div>
+                            <div class="text-slate-300 font-medium">Partner High Schools & Colleges</div>
+                        </div>
+                        <div class="bg-slate-800/60 p-8 rounded-3xl border border-slate-700/80">
+                            <div class="text-4xl sm:text-5xl font-black text-brand-400 mb-2">$1.2M</div>
+                            <div class="text-slate-300 font-medium">Open Curriculum Value Provided</div>
+                        </div>
+                        <div class="bg-slate-800/60 p-8 rounded-3xl border border-slate-700/80">
+                            <div class="text-4xl sm:text-5xl font-black text-brand-400 mb-2">100%</div>
+                            <div class="text-slate-300 font-medium">Transparent Public Accountability</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Governance & Financial Integrity -->
+            <section id="governance" class="py-24 bg-slate-100/70 border-t border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl mx-auto text-center mb-16">
+                        <span class="inline-flex px-3.5 py-1.5 bg-brand-100 text-brand-800 rounded-xl text-xs font-bold tracking-wide uppercase mb-4 border border-brand-200">
+                            ACCOUNTABILITY
+                        </span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">Governance & Financial Integrity</h2>
+                        <p class="text-slate-600 text-lg">
+                            Spark Bio maintains strict adherence to federal and state nonprofit governance regulations. As a public charity exempt under section 501(c)(3) of the Internal Revenue Code, we are fully committed to financial transparency and public accountability.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <div class="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-xs">
+                            <h4 class="font-bold text-slate-900 text-xl mb-3 flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-brand-600"></span>
+                                Tax Exemption Status
+                            </h4>
+                            <p class="text-slate-600 leading-relaxed">Spark Bio is recognized by the IRS as a tax-exempt public charity under section 501(c)(3). Contributions, grants, and public support directly fund our charitable educational mission.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-xs">
+                            <h4 class="font-bold text-slate-900 text-xl mb-3 flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-brand-600"></span>
+                                Non-Discrimination Policy
+                            </h4>
+                            <p class="text-slate-600 leading-relaxed">Spark Bio does not discriminate on the basis of race, color, religion, gender, national origin, age, disability, or veteran status in any of its programs, grants, or operations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-24 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                        <div>
+                            <span class="inline-flex px-3.5 py-1.5 bg-brand-50 text-brand-700 rounded-xl text-xs font-bold tracking-wide uppercase mb-4 border border-brand-200">
+                                GET IN TOUCH
+                            </span>
+                            <h2 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">
+                                Contact Spark Bio
+                            </h2>
+                            <p class="text-slate-600 text-lg mb-8 leading-relaxed">
+                                Have questions about our educational programs, grant applications, or research partnerships? Reach out to our administrative team using the contact details or form below.
+                            </p>
+                            <div class="space-y-6">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-700 flex items-center justify-center font-bold text-xl shrink-0 border border-brand-200">
+                                        📍
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 text-base">Principal Office Address</h4>
+                                        <p class="text-slate-600 text-base mt-0.5">4365 Executive Dr, Ste 1100<br>San Diego, CA 92121, United States</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-700 flex items-center justify-center font-bold text-xl shrink-0 border border-brand-200">
+                                        ✉️
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 text-base">Official Email</h4>
+                                        <p class="text-slate-600 text-base mt-0.5"><a href="mailto:query@sparkbio.bond" class="text-brand-700 font-medium hover:underline">query@sparkbio.bond</a></p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-700 flex items-center justify-center font-bold text-xl shrink-0 border border-brand-200">
+                                        🏛️
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 text-base">EIN & Registration</h4>
+                                        <p class="text-slate-600 text-base mt-0.5 font-mono">85-1862988 (501(c)(3) Public Charity)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-8 sm:p-12 rounded-3xl border border-slate-200 shadow-sm">
+                            <h3 class="text-2xl font-bold text-slate-900 mb-6">Send Us a Message</h3>
+                            <form id="contact-form" class="space-y-5" onsubmit="handleContactSubmit(event)">
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-2">Your Name</label>
+                                    <input type="text" required class="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-white text-slate-900 font-medium" placeholder="Jane Doe">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
+                                    <input type="email" required class="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-white text-slate-900 font-medium" placeholder="jane@example.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-2">Message</label>
+                                    <textarea rows="4" required class="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-600 bg-white text-slate-900 font-medium" placeholder="How can we help you?"></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-4 rounded-xl bg-brand-600 text-white font-bold hover:bg-brand-700 transition shadow-lg shadow-brand-600/30 text-base">
+                                    Send Message
+                                </button>
+                                <div id="form-success" class="hidden p-4 rounded-xl bg-brand-50 border border-brand-200 text-brand-800 text-sm font-semibold text-center">
+                                    Thank you! Your message has been received. We will respond promptly.
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Dedicated Policies View Container (Initially Hidden) -->
+        <div id="policy-container" class="hidden py-16 bg-slate-50 min-h-[75vh]">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button onclick="showSection('main-content')" class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold hover:bg-slate-100 transition shadow-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Back to Home
+                </button>
+
+                <!-- Policy Navigation Tabs -->
+                <div class="flex flex-wrap gap-2 mb-8 border-b border-slate-200 pb-4">
+                    <button id="tab-privacy" onclick="openPolicyModal('privacy')" class="px-5 py-2.5 rounded-xl font-bold text-sm transition">Privacy Policy</button>
+                    <button id="tab-terms" onclick="openPolicyModal('terms')" class="px-5 py-2.5 rounded-xl font-bold text-sm transition">Terms of Use</button>
+                    <button id="tab-adgrant" onclick="openPolicyModal('adgrant')" class="px-5 py-2.5 rounded-xl font-bold text-sm transition">Google Ad Grants Policy</button>
+                </div>
+
+                <!-- Policy Content Box -->
+                <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm prose prose-slate max-w-none" id="policy-body">
+                    <!-- Dynamic content injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Summary Modal / Overlay -->
+        <div id="ai-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl border border-slate-200 relative animate-in fade-in zoom-in duration-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-brand-500 animate-pulse"></span>
+                        <h4 id="ai-modal-title" class="font-bold text-slate-900 text-lg">AI Initiative Insight</h4>
+                    </div>
+                    <button onclick="closeAiModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold px-2">&times;</button>
+                </div>
+                <div id="ai-modal-content" class="text-slate-600 text-sm leading-relaxed mb-6 min-h-[100px] flex items-center justify-center">
+                    <div class="flex items-center gap-3 text-brand-700 font-medium">
+                        <div class="w-5 h-5 border-2 border-brand-600 border-t-transparent rounded-full animate-spin"></div>
+                        Generating AI summary with Gemini API...
+                    </div>
+                </div>
+                <button onclick="closeAiModal()" class="w-full py-3 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition text-sm">Close</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
+                            SB
+                        </div>
+                        <span class="text-xl font-bold text-white tracking-tight">Spark Bio</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 max-w-md">
+                        Spark Bio is an independent 501(c)(3) nonprofit public charity dedicated to advancing biotechnology education and supporting public scientific research.
+                    </p>
+                    <p class="text-xs text-brand-400 font-mono font-bold">
+                        EIN: 85-1862988
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 text-xs uppercase tracking-wider">Quick Links</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#home" onclick="showSection('main-content')" class="hover:text-white transition">Home</a></li>
+                        <li><a href="#about" onclick="showSection('main-content')" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="#mission" onclick="showSection('main-content')" class="hover:text-white transition">Mission & Vision</a></li>
+                        <li><a href="#ai-hub" onclick="showSection('main-content')" class="hover:text-white transition">AI Bio-Hub</a></li>
+                        <li><a href="#contact" onclick="showSection('main-content')" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 text-xs uppercase tracking-wider">Legal & Policies</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><button onclick="openPolicyModal('privacy')" class="hover:text-white transition text-left">Privacy Policy</button></li>
+                        <li><button onclick="openPolicyModal('terms')" class="hover:text-white transition text-left">Terms of Use</button></li>
+                        <li><button onclick="openPolicyModal('adgrant')" class="hover:text-white transition text-left">Google Ad Grant Compliance</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 Spark Bio. All rights reserved. 501(c)(3) Nonprofit Organization (EIN: 85-1862988).</p>
+                <p>Principal Office: 4365 Executive Dr, Ste 1100, San Diego, CA 92121 &bull; query@sparkbio.bond</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        mobileBtn.addEventListener('click', toggleMobileMenu);
+
+        // Section switching (Main vs Policies)
+        function showSection(sectionId) {
+            const mainContent = document.getElementById('main-content');
+            const policyContainer = document.getElementById('policy-container');
+            
+            if (sectionId === 'main-content') {
+                mainContent.classList.remove('hidden');
+                policyContainer.classList.add('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Gemini API integration helper with exponential backoff
+        async function callGeminiAPI(userQuery, systemPrompt) {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt || "You are an expert AI assistant for Spark Bio, a tax-exempt 501(c)(3) nonprofit public charity headquartered in San Diego, CA (EIN: 85-1862988). Provide accurate, professional, and helpful responses regarding biotechnology education, open curricula, and research micro-grants." }]
+                }
+            };
+
+            let delay = 1000;
+            for (let attempt = 0; attempt < 4; attempt++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        return candidate.content.parts[0].text;
+                    }
+                    throw new Error("Invalid response structure from Gemini API");
+                } catch (error) {
+                    if (attempt === 3) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        // Chatbot interaction handler
+        async function handleChatSubmit(event) {
+            event.preventDefault();
+            const inputEl = document.getElementById('chat-input');
+            const query = inputEl.value.trim();
+            if (!query) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+            const submitBtn = document.getElementById('chat-submit-btn');
+
+            // Append user message
+            chatMessages.innerHTML += `
+                <div class="flex items-start justify-end gap-3">
+                    <div class="bg-brand-600 text-white p-4 rounded-2xl rounded-tr-sm shadow-xs max-w-[85%] leading-relaxed">
+                        ${escapeHtml(query)}
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">You</div>
+                </div>
+            `;
+            inputEl.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Append loading indicator
+            const loadingId = 'loading-' + Date.now();
+            chatMessages.innerHTML += `
+                <div id="${loadingId}" class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">AI</div>
+                    <div class="bg-white p-4 rounded-2xl rounded-tl-sm border border-slate-200 text-slate-500 shadow-xs flex items-center gap-2">
+                        <div class="w-4 h-4 border-2 border-brand-600 border-t-transparent rounded-full animate-spin"></div>
+                        Consulting Spark Bio knowledge base...
+                    </div>
+                </div>
+            `;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            submitBtn.disabled = true;
+
+            try {
+                const aiResponse = await callGeminiAPI(query);
+                document.getElementById(loadingId).remove();
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">AI</div>
+                        <div class="bg-white p-4 rounded-2xl rounded-tl-sm border border-slate-200 text-slate-700 shadow-xs max-w-[85%] leading-relaxed">
+                            ${escapeHtml(aiResponse)}
+                        </div>
+                    </div>
+                `;
+            } catch (err) {
+                document.getElementById(loadingId).remove();
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">AI</div>
+                        <div class="bg-red-50 p-4 rounded-2xl rounded-tl-sm border border-red-200 text-red-700 shadow-xs max-w-[85%] text-sm">
+                            Apologies, we encountered a temporary connection issue. Please feel free to email our administrative office directly at <a href="mailto:query@sparkbio.bond" class="underline font-bold">query@sparkbio.bond</a>.
+                        </div>
+                    </div>
+                `;
+            } finally {
+                submitBtn.disabled = false;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        function sendPresetPrompt(promptText) {
+            document.getElementById('chat-input').value = promptText;
+            document.getElementById('ai-hub').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+        }
+
+        // AI Initiative Summary generator
+        async function generateAISummary(initiativeName) {
+            const modal = document.getElementById('ai-modal');
+            const titleEl = document.getElementById('ai-modal-title');
+            const contentEl = document.getElementById('ai-modal-content');
+
+            titleEl.innerText = `AI Insight: ${initiativeName}`;
+            contentEl.innerHTML = `
+                <div class="flex items-center gap-3 text-brand-700 font-medium">
+                    <div class="w-5 h-5 border-2 border-brand-600 border-t-transparent rounded-full animate-spin"></div>
+                    Generating AI summary with Gemini API...
+                </div>
+            `;
+            modal.classList.remove('hidden');
+
+            try {
+                const prompt = `Provide a concise, engaging 3-paragraph summary of Spark Bio's '${initiativeName}' program, highlighting its benefits for students, educators, and public scientific literacy as a 501(c)(3) nonprofit organization (EIN: 85-1862988).`;
+                const summary = await callGeminiAPI(prompt);
+                contentEl.innerHTML = `<p>${escapeHtml(summary)}</p>`;
+            } catch (err) {
+                contentEl.innerHTML = `<p class="text-red-600 font-medium">Unable to generate summary at this moment. Please try again later or contact query@sparkbio.bond.</p>`;
+            }
+        }
+
+        function closeAiModal() {
+            document.getElementById('ai-modal').classList.add('hidden');
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // Policy data & modal viewer
+        const policies = {
+            privacy: {
+                title: "Privacy Policy",
+                updated: "Last updated: January 1, 2026",
+                content: `
+                    <h2>Privacy Policy</h2>
+                    <p><strong>Spark Bio</strong> ("we", "our", or "us") respects your privacy and is committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website at sparkbio.bond or interact with our 501(c)(3) nonprofit programs.</p>
+                    
+                    <h3>1. Information We Collect</h3>
+                    <p>We may collect personal information that you voluntarily provide to us when you fill out contact forms, apply for educational resources, or reach out to us via email at <strong>query@sparkbio.bond</strong>. This may include:</p>
+                    <ul>
+                        <li>Full Name</li>
+                        <li>Email Address</li>
+                        <li>Organizational Affiliation (if applicable)</li>
+                        <li>Any message content or inquiries submitted</li>
+                    </ul>
+
+                    <h3>2. How We Use Your Information</h3>
+                    <p>We use the information we collect strictly to fulfill your inquiries, provide educational materials, manage our nonprofit research support grants, and improve our public website. Spark Bio <strong>never</strong> sells, rents, or trades your personal information to third-party commercial entities.</p>
+
+                    <h3>3. Security of Data</h3>
+                    <p>We implement robust administrative, technical, and physical security measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.</p>
+
+                    <h3>4. Contact Us</h3>
+                    <p>If you have any questions regarding this Privacy Policy, please contact us at:</p>
+                    <p><strong>Spark Bio</strong><br>
+                    4365 Executive Dr, Ste 1100<br>
+                    San Diego, CA 92121, United States<br>
+                    Email: <a href="mailto:query@sparkbio.bond">query@sparkbio.bond</a></p>
+                `
+            },
+            terms: {
+                title: "Terms of Use",
+                updated: "Last updated: January 1, 2026",
+                content: `
+                    <h2>Terms of Use</h2>
+                    <p>Welcome to the Spark Bio website. By accessing or using our website located at sparkbio.bond, you agree to comply with and be bound by the following Terms of Use. Please review them carefully.</p>
+
+                    <h3>1. About Spark Bio</h3>
+                    <p>Spark Bio is a tax-exempt 501(c)(3) nonprofit public charity organization (EIN: <strong>85-1862988</strong>) headquartered in San Diego, California. Our primary mission is to advance biotechnology education and support open scientific research.</p>
+
+                    <h3>2. Intellectual Property & Open Educational Resources</h3>
+                    <p>Unless otherwise stated, educational curricula, research modules, and text published on this website are made available for educational, non-commercial use. You may cite, share, and distribute our materials provided proper attribution is given to Spark Bio.</p>
+
+                    <h3>3. Prohibited Conduct</h3>
+                    <p>Users agree not to use this website to transmit malicious code, attempt unauthorized access to our systems, or engage in any unlawful activity. As a nonprofit organization, our website does not feature commercial ads, affiliate marketing, or misleading promotions.</p>
+
+                    <h3>4. Governing Law</h3>
+                    <p>These Terms shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of law provisions.</p>
+
+                    <h3>5. Contact Information</h3>
+                    <p>For questions concerning these Terms of Use, contact us at <a href="mailto:query@sparkbio.bond">query@sparkbio.bond</a> or at our principal office: 4365 Executive Dr, Ste 1100, San Diego, CA 92121.</p>
+                `
+            },
+            adgrant: {
+                title: "Google Ad Grant Compliance Policy",
+                updated: "Last updated: January 1, 2026",
+                content: `
+                    <h2>Google Ad Grants Compliance & Public Transparency Policy</h2>
+                    <p>Spark Bio fully complies with all Google Ad Grants program policies and standards for 501(c)(3) nonprofit organizations. Below is our public compliance summary.</p>
+
+                    <h3>1. Organization Verification</h3>
+                    <ul>
+                        <li><strong>Legal Name:</strong> Spark Bio</li>
+                        <li><strong>EIN:</strong> 85-1862988</li>
+                        <li><strong>Status:</strong> Tax-exempt 501(c)(3) public charity</li>
+                        <li><strong>Headquarters:</strong> 4365 Executive Dr, Ste 1100, San Diego, CA 92121</li>
+                    </ul>
+
+                    <h3>2. Mission & Public Good Statement</h3>
+                    <p>Spark Bio exists exclusively for charitable and educational purposes in the field of biotechnology. All resources promoted through grant-funded advertising directly serve our public mission to educate students, support researchers, and provide open-access scientific learning tools.</p>
+
+                    <h3>3. Website Quality & Transparency Standards</h3>
+                    <p>Our website maintains high editorial standards, active SSL security, clear contact details (query@sparkbio.bond), and transparent disclosure of our governance, mission, and programs. We maintain no commercial ads or affiliate links.</p>
+
+                    <h3>4. Non-Commercial Policy</h3>
+                    <p>In accordance with Google Ad Grants requirements, Spark Bio does not feature commercial advertisements, banners, or profit-driven products. All content is strictly dedicated to public education and nonprofit charitable initiatives.</p>
+                `
+            }
+        };
+
+        function openPolicyModal(policyKey) {
+            const mainContent = document.getElementById('main-content');
+            const policyContainer = document.getElementById('policy-container');
+            const policyBody = document.getElementById('policy-body');
+            
+            mainContent.classList.add('hidden');
+            policyContainer.classList.remove('hidden');
+
+            // Set active tab styling
+            ['privacy', 'terms', 'adgrant'].forEach(key => {
+                const btn = document.getElementById(`tab-${key}`);
+                if (key === policyKey) {
+                    btn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-brand-600 text-white shadow-sm transition";
+                } else {
+                    btn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition";
+                }
+            });
+
+            const data = policies[policyKey];
+            policyBody.innerHTML = `
+                <div class="text-xs font-semibold text-brand-700 uppercase tracking-wider mb-2">${data.updated}</div>
+                ${data.content}
+            `;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Contact form submission handler
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('contact-form');
+            const successMsg = document.getElementById('form-success');
+            
+            form.querySelector('button[type="submit"]').style.display = 'none';
+            successMsg.classList.remove('hidden');
+            form.reset();
+        }
+    </script>
+</body>
+</html>
